@@ -57,8 +57,13 @@
 			return new DocumentCollectionCursor(results);
 		},
 		insert: function () {
-			var records = ArrayProto.slice.call(arguments, 0);
-			ArrayProto.push.apply(dataStore[this.name], records);
+			var records = ArrayProto.slice.call(arguments, 0), i = 0, len = records.length;
+			for (; i < len; ++i) {
+				if (!!records[i]._id) {
+					records[i]._id = dataStore[this.name].length;
+				}
+				ArrayProto.push.apply(dataStore[this.name], [records[i]]);
+			}
 			this.length = dataStore[this.name].length;
 			return this;
 		},

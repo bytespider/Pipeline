@@ -39,10 +39,13 @@ test('Basics', function () {
     
     var cursor1 = db.users.find();
     ok(cursor1 instanceof DocumentCollectionCursor, 'DocumentCollection::find() returns a cursor');
+    console.log(cursor1);
 	
 	var cursor2 = db.users.find(function() {return age > 21;});
 	equals(cursor2.length, 2, 'DocumentCollection::find() found 2 results using function query');
+    console.log(cursor2);
 	
 	var cursor3 = db.users.find({age: 21, name: 'Luke Skywalker'});
 	equals(cursor3.length, 1, 'DocumentCollection::find() found 2 results using JSON query');
+    console.log(cursor3);
 });
