@@ -12,8 +12,19 @@ information.
 
 ## Usage
 
-
-
+    var db = new Pipeline();
+    db.createCollection('users');
+    
+    db.users.insert({
+    	name: 'Darth Vader',
+    	age: 43
+    }, {
+    	name: 'Luke Skywalker',
+    	age: 21
+    });
+    
+    var results = db.users.find({age: 21});
+    var results2 = db.users.find(function (){return name.indexOf('v') > -1});
 
 ## Authors
 
