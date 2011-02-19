@@ -48,4 +48,9 @@ test('Basics', function () {
 	var cursor3 = db.users.find({age: 21, name: 'Luke Skywalker'});
 	equals(cursor3.length, 1, 'DocumentCollection::find() found 2 results using JSON query');
     console.log(cursor3);
+    
+	db.users.update({age: 43}, {name: 'Anakin Skywalker'});
+	var cursor4 = db.users.find({_id: 0});
+	equals(cursor4[0].name, 'Anakin Skywalker', 'DocumentCollection::update() updated record 0 with new name "Anakin Skywalker"');
+    console.log(cursor4);
 });

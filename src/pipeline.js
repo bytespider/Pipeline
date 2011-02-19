@@ -51,7 +51,7 @@
 			
 			return new DocumentCollectionCursor(results);
 		},
-		insert: function () {
+		insert: function (document) {
 			var records = ArrayProto.slice.call(arguments, 0), i = 0, len = records.length;
 			for (; i < len; ++i) {
 				if (!('_id' in records[i])) {
@@ -62,7 +62,15 @@
 			this.length = dataStore[this.name].length;
 			return this;
 		},
-		update: function () {},
+		update: function (criteria, newObj) {
+			var records = this.find(criteria), i = 0, j, len = records.length;
+			for (; i < len; ++i) {
+				for (j in newObj) {
+					records[i][j] = newObj[j];
+				}
+			}
+			return this;
+		},
 		save: function () {},
 		remove: function () {},
 	};
