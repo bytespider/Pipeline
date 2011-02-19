@@ -6,7 +6,7 @@
  */
 
 //(function(){
-	var dataStore = {}, ArrayProto = Array.prototype;
+	var adapter, dataStore = {}, ArrayProto = Array.prototype;
 	
 	function Pipeline() {}
 	
@@ -23,10 +23,38 @@
 	}
 	DocumentCollection.prototype = {
 		length: 0,
-		find: function () {
-			if (arguments.length == 0) {
-				return new DocumentCollectionCursor(dataStore[this.name]);
+		find: function (query) {
+			var results, fn, fnBody, filter, i;
+			
+			if (!!query) {
+				results = dataStore[this.name];
 			}
+
+			if (typeof query == 'object') {
+				fn = [];
+				for (i in query) {
+					var value = query[i];
+					if (typeof value == 'string') {
+						value = '"'+value+'"';
+					}
+					fn.push(i + ' == ' + value);
+				}
+
+				fnBody = 'return ' + fn.join(' && ');
+			}
+			
+			if (typeof query == 'function') {
+				fn = query.toString();
+				fnBody = fn.substring(fn.indexOf('{') + 1, fn.indexOf('}'));
+			}
+			
+			if (fnBody) {
+				filter = Function.prototype.constructor.apply(this, ['element', 'with (element) {' + fnBody + '}']);
+				
+				results = dataStore[this.name].filter(filter);
+			}
+			
+			return new DocumentCollectionCursor(results);
 		},
 		insert: function () {
 			var records = ArrayProto.slice.call(arguments, 0);

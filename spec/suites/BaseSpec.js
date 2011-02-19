@@ -29,7 +29,7 @@ test('Basics', function () {
     	age: 21
     });
     collection.insert({
-    	name: 'Luke Skywalke',
+    	name: 'Luke Skywalker',
     	age: 21
     },{
     	name: 'Yoda',
@@ -37,8 +37,12 @@ test('Basics', function () {
     });
     equals(collection.length, 4, 'DocumentCollection has 4 records');
     
-    var cursor = db.users.find();
-    ok(cursor instanceof DocumentCollectionCursor, 'DocumentCollection::find() returns a cursor');
-
-	    
+    var cursor1 = db.users.find();
+    ok(cursor1 instanceof DocumentCollectionCursor, 'DocumentCollection::find() returns a cursor');
+	
+	var cursor2 = db.users.find(function() {return age > 21;});
+	equals(cursor2.length, 2, 'DocumentCollection::find() found 2 results using function query');
+	
+	var cursor3 = db.users.find({age: 21, name: 'Luke Skywalker'});
+	equals(cursor3.length, 1, 'DocumentCollection::find() found 2 results using JSON query');
 });
