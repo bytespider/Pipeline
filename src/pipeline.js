@@ -1,21 +1,41 @@
 /**
  *  @license
  *  Pipeline version @VERSION
- *  Copyright (c) 2010 Rob Griffiths (http://bytespider.eu)
+ *  Copyright (c) 2011 Rob Griffiths (http://bytespider.eu)
  *  Pipeline is freely distributable under the terms of an MIT-style license.
  */
 
-var Pipeline = (function(){
+(function(){
+	function Pipeline() {
+		
+	}
 	
+	Pipeline.prototype = {
+		createCollection: function (collection) {
+			this[collection] = new DocumentCollection();
+			return this[collection];
+		}
+	};
+	
+	function DocumentCollection() {}
+	DocumentCollection.prototype = {
+		find: function () {},
+		insert: function () {},
+		update: function () {},
+		save: function () {},
+		remove: function () {},
+	};
+	
+	window['Pipeline'] =  Pipeline;
 })();
 
 function obj() {
 }
-obj.prototype = new Array();
+obj.prototype = [];
 
 var prototype = {
 	constructor: obj,
-	toString: function () {return Array.prototype.join()},
+	toString: function () {return Array.prototype.join();},
 	join: undefined,
 	push: undefined,
 	pop: undefined,
@@ -28,13 +48,12 @@ var prototype = {
 	map: undefined,
 	some: undefined,
 	reduce: undefined,
-	reduceRight: undefined,
+	reduceRight: undefined
 };
 
 for (var i in prototype) {
 	obj.prototype[i] = prototype[i];
 }
 
-var obj1 = new obj;
+var obj1 = new obj();
 console.log(obj1);
-
