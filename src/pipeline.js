@@ -6,9 +6,7 @@
  */
 
 (function(){
-	function Pipeline() {
-		
-	}
+	function Pipeline() {}
 	
 	Pipeline.prototype = {
 		createCollection: function (collection) {
@@ -26,35 +24,30 @@
 		remove: function () {},
 	};
 	
+	function DocumentCollectionCursor() {}
+	DocumentCollectionCursor.prototype = [];
+	 
+	var extend = {
+		constructor: DocumentCollectionCursor,
+		toString: function () {return Array.prototype.join();},
+		join: undefined,
+		push: undefined,
+		pop: undefined,
+		concat: undefined,
+		splice: undefined,
+		shift: undefined,
+		unshift: undefined,
+		reverse: undefined,
+		every: undefined,
+		map: undefined,
+		some: undefined,
+		reduce: undefined,
+		reduceRight: undefined
+	};
+	
+	for (var i in extend) {
+		DocumentCollectionCursor.prototype[i] = extend[i];
+	}
+	
 	window['Pipeline'] =  Pipeline;
 })();
-
-function obj() {
-}
-obj.prototype = [];
-
-var prototype = {
-	constructor: obj,
-	toString: function () {return Array.prototype.join();},
-	join: undefined,
-	push: undefined,
-	pop: undefined,
-	concat: undefined,
-	splice: undefined,
-	shift: undefined,
-	unshift: undefined,
-	reverse: undefined,
-	every: undefined,
-	map: undefined,
-	some: undefined,
-	reduce: undefined,
-	reduceRight: undefined
-};
-
-for (var i in prototype) {
-	obj.prototype[i] = prototype[i];
-}
-
-var obj1 = new obj();
-console.log(obj1);
-
