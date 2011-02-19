@@ -57,3 +57,4 @@ for (var i in prototype) {
 
 var obj1 = new obj();
 console.log(obj1);
+
