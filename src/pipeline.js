@@ -24,11 +24,7 @@
 	DocumentCollection.prototype = {
 		length: 0,
 		find: function (query) {
-			var results, fn, fnBody, filter, i;
-			
-			if (!!query) {
-				results = dataStore[this.name];
-			}
+			var results = dataStore[this.name], fn, fnBody, filter, i;
 
 			if (typeof query == 'object') {
 				fn = [];
@@ -50,7 +46,6 @@
 			
 			if (fnBody) {
 				filter = Function.prototype.constructor.apply(this, ['element', 'with (element) {' + fnBody + '}']);
-				
 				results = dataStore[this.name].filter(filter);
 			}
 			
@@ -59,7 +54,7 @@
 		insert: function () {
 			var records = ArrayProto.slice.call(arguments, 0), i = 0, len = records.length;
 			for (; i < len; ++i) {
-				if (!!records[i]._id) {
+				if (!('_id' in records[i])) {
 					records[i]._id = dataStore[this.name].length;
 				}
 				ArrayProto.push.apply(dataStore[this.name], [records[i]]);
