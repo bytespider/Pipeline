@@ -53,4 +53,9 @@ test('Basics', function () {
 	var cursor4 = db.users.find({_id: 0});
 	equals(cursor4[0].name, 'Anakin Skywalker', 'DocumentCollection::update() updated record 0 with new name "Anakin Skywalker"');
     console.log(cursor4);
+    
+	db.users.remove(function () {return age > 800});
+	var cursor5 = db.users.find();
+	equals(cursor5.length, 3, 'DocumentCollection::remove() removed 1 record');
+    console.log(cursor5);
 });

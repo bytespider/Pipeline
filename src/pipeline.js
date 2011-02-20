@@ -65,7 +65,20 @@
 			return this;
 		},
 		save: function () {},
-		remove: function () {},
+		remove: function (criteria) {
+			var records = this.find(criteria), i = 0, j, len = records.length, index;
+			for (; i < len; ++i) {
+				index = dataStore[this.name].indexOf(records[i]);
+				if (index > -1) {
+					delete dataStore[this.name][index];
+				};
+			}
+
+			dataStore[this.name] = dataStore[this.name].filter(function (e) {return e !== undefined;});
+			
+			this.length = dataStore[this.name].length;
+			return this;
+		},
 	};
 	
 	function DocumentCollectionCursor(array) {
