@@ -49,13 +49,17 @@ test('Basics', function () {
 	equals(cursor3.length, 1, 'DocumentCollection::find() found 2 results using JSON query');
     console.log(cursor3);
     
-	db.users.update({age: 43}, {name: 'Anakin Skywalker'});
-	var cursor4 = db.users.find({_id: 0});
-	equals(cursor4[0].name, 'Anakin Skywalker', 'DocumentCollection::update() updated record 0 with new name "Anakin Skywalker"');
+	var cursor4 = db.users.find('name == "Luke Skywalker"');
+	equals(cursor4.length, 1, 'DocumentCollection::find() found 2 results using string query');
     console.log(cursor4);
     
-	db.users.remove(function () {return age > 800});
-	var cursor5 = db.users.find();
-	equals(cursor5.length, 3, 'DocumentCollection::remove() removed 1 record');
+	db.users.update({age: 43}, {name: 'Anakin Skywalker'});
+	var cursor5 = db.users.find({_id: 0});
+	equals(cursor5[0].name, 'Anakin Skywalker', 'DocumentCollection::update() updated record 0 with new name "Anakin Skywalker"');
     console.log(cursor5);
+    
+	db.users.remove(function () {return age > 800});
+	var cursor6 = db.users.find();
+	equals(cursor6.length, 3, 'DocumentCollection::remove() removed 1 record');
+    console.log(cursor6);
 });

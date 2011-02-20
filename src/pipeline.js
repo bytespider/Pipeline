@@ -32,6 +32,10 @@
 				fnBody = 'return ' + fn.join(' && ');
 			}
 			
+			if (typeof query == 'string') {
+				fnBody = 'return ' + query;
+			}
+			
 			if (typeof query == 'function') {
 				fn = query.toString();
 				fnBody = fn.substring(fn.indexOf('{') + 1, fn.indexOf('}'));
